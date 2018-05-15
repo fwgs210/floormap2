@@ -272,6 +272,26 @@
 			}
 
 		}
+		select.has-terrace, select.has-no-terrace {
+			-webkit-appearance: button;
+		    -webkit-border-radius: 2px;
+		    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+		    -webkit-padding-end: 20px;
+		    -webkit-padding-start: 2px;
+		    -webkit-user-select: none;
+		    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+		    background-position: 98% center;
+		    background-repeat: no-repeat;
+		    border: 1px solid #AAA;
+		    color: #555;
+		    font-size: 1rem;
+		    padding: 5px 10px;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    width: 360px;
+		    display: block;
+		    height: auto;
+		}
 		/* floormap style end */
     </style>
 </head>
@@ -519,10 +539,37 @@
 		</div>  
 		<img src="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/05/65_King_architecture_updatedv2.svg">
 	</div>
+	<h5>Terrace Level Floors</h5>
+	<select class="has-terrace">
+		<option disabled selected>Please select a floor</option>
+        <option value="15">4th Floor - 26,812 sq. ft. | Terrace: 1,894 sq. ft.</option>
+		<option value="14">5th Floor - 25,826 sq. ft. | Terrace: 678 sq. ft.</option>
+		<option value="13">6th Floor - 24,510 sq. ft. | Terrace: 2,379 sq. ft.</option>
+		<option value="5">14th Floor - 23,690 sq. ft. | Terrace: 969 sq. ft.</option>
+		<option value="4">15th Floor - 22,736 sq. ft. | Terrace: 1,076 sq. ft.</option>
+		<option value="3">16th Floor - 19,830 sq. ft. | Terrace: 2,713 sq. ft.</option>
+		<option value="2">17th Floor - 15,705 sq. ft. | Terrace: 3,843 sq. ft.</option>
+		<option value="0">19th Floor - Terrace: 4,600 sq. ft.</option>
+    </select>
+    <h5>Non-Terrace Level Floors</h5>
+    <select class="has-no-terrace">
+    	<option disabled selected>Please select a floor</option>
+        <option value="17">2nd Floor - 20,303 sq. ft.</option>
+		<option value="16">3rd Floor - 29,131 sq. ft.</option>
+		<option value="12">7th Floor - 24,510 sq. ft.</option>
+		<option value="11">8th Floor - 24,510 sq. ft.</option>
+		<option value="10">9th Floor - 24,510 sq. ft.</option>
+		<option value="9">10th Floor - 24,510 sq. ft.</option>
+		<option value="8">11th Floor - 24,510 sq. ft.</option>
+		<option value="7">12th Floor - 24,510 sq. ft.</option>
+		<option value="6">13th Floor - 24,510 sq. ft.</option>
+		<option value="1">18th Floor - 15,705 sq. ft.</option>
+    </select>
 	<script type="text/javascript">    
 	      const openToolTip = document.getElementsByClassName('floors-BG')
 	      const closeToolTip = document.getElementsByClassName('tooltip-close')
 	      const actingToolTip = document.getElementsByClassName('floors')
+	      const floorSelector = document.querySelectorAll('.has-terrace, .has-no-terrace')
 	      let currentOpen;
 
 	      Array.from(openToolTip).forEach(e => {
@@ -542,5 +589,13 @@
 	          actingToolTip[index].classList.remove('active');
 	        })
 	      })
+
+	      floorSelector.forEach(e => {
+		      e.addEventListener("change", function(i){
+		      	const index = parseInt(i.target.value)
+		      	openToolTip[index].click()
+		      });
+	      })
+
 	</script>
 </body></html>
