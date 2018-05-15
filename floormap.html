@@ -1,0 +1,546 @@
+<!DOCTYPE html><html>
+<head>
+	<title>Tooltip Example</title>
+
+	<!-- 1.  LOAD STYLESHEETS -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+
+	<link rel="stylesheet"  href="http://dev.cbrecanada.com/65kingeast/floormap/css/jquery-showcase-2.2.css" type="text/css" media="all" />
+
+	<!-- 2. LOAD SCRIPTS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+	<script type="text/javascript" src="http://dev.cbrecanada.com/65kingeast/floormap/js/jquery-showcase-2.2.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+
+	<!-- 3. CALL SHOWCASE ON ID="BOKEH" -->
+<!-- 	<script type="text/javascript">
+		jQuery(window).load(function(){
+			jQuery('#floormap').ShowCase();
+		});
+	</script> -->
+
+
+<style>
+		/* floormap style */
+	    #floormap {width:100%;max-width:600px;height:100%;margin:40px auto;position: relative;}
+	
+		
+		/* TOOLTIP TAIL */
+		.tooltip:before {  
+		    content:' ';
+		    display: block;
+		    position: absolute;
+		    left: -8px;
+		    top: 15px;
+		    width: 14px;
+		    height: 14px;
+		    border-color:rgba(51,51,51,0.25);
+		    border-width: 1px;
+		    border-style: none none solid solid;
+		    background-color: #FFFFFF;
+			box-shadow:0px 2px 2px 0px rgba(51,51,51,0.15);
+		    transform: rotate(45deg);
+		    -webkit-transform: rotate(45deg);
+		    -moz-transform: rotate(45deg);}
+		
+		/* TOOLTIP */
+		.tooltip {
+			overflow:visible!important;
+		  	position: relative;
+			border:1px solid rgba(51,51,51,0.25);
+			background:#FFFFFF;
+		    width: 200px;
+		    margin-left: 20px;
+		    padding:0px 12px;
+		    border-radius:2px;
+			box-shadow:2px 2px 2px 0px rgba(51,51,51,0.15);}
+		
+		/* TOOLTIP TEXT */
+
+		.tooltip h4 {
+			font-size: 1.25rem;
+		    margin-bottom: 10px;
+		}
+		.tooltip p {
+			font-size: 1rem;
+		    line-height: 1.5;
+		}
+		.floors{
+			height: 3.5%;
+			opacity: 0;
+			position: absolute;
+			overflow: hidden;
+			transition: all .5s;
+		}
+		.floors.active, .floors:hover {
+			transition: all .5s;
+			opacity: 1;
+			overflow: inherit;
+		}
+		.floors.active .tooltip-position {
+			display: block;
+		}
+		.floors-BG {
+			cursor: pointer;
+			background-color: rgba(9, 145, 152,.5);
+			height: 100%;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: #ffffff;
+		}
+		.floors-BG:before {
+		    content: 'Click for more info';
+
+		}
+		.no-terrace {
+			background-color: rgba(162, 63, 35,.5);
+		}
+		.floor-19 {
+		    width: 44%;
+		    top: 12.5%;
+		    left: 15%;
+		}
+		.floor-18 {
+		    top: 17.5%;
+		    left: 15%;
+		    width: 56%;
+		}
+		.floor-17 {
+		    top: 22.2%;
+		    left: 15%;
+		    width: 56%;
+		}
+		.floor-16 {
+		    top: 26.6%;
+		    left: 15%;
+		    width: 60.5%
+		}
+		.floor-15 {
+    		top: 31%;
+		    left: 15%;
+		    width: 63.5%;
+		}
+		.floor-14 {
+    		top: 35.5%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-13 {
+    		top: 40%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-12 {
+			top: 44.6%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-11 {
+    		top: 49.2%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-10 {
+    		top: 53.5%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-9 {
+    		top: 57.8%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-8 {
+    		top: 62%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-7 {
+			top: 66.3%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-6 {
+			top: 70.6%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-5 {
+			top: 75%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-4 {
+    		top: 79.2%;
+		    left: 15%;
+		    width: 77%;
+		}
+		.floor-3 {
+    		top: 83.5%;
+		    left: 15%;
+		    width: 83.5%;
+		}
+		.floor-2 {
+    		top: 87.7%;
+		    left: 15%;
+		    width: 83.5%;
+		}
+		.floor-1 {
+		    top: 92.2%;
+		    left: 15%;
+		    width: 83.5%;
+		    height: 5.5%;
+		}
+		.hover-container {
+			width: inherit;
+		    height: inherit;
+		    position: absolute;
+		    z-index: 9;
+		}
+		.tooltip-close {
+			cursor: pointer;
+			position: absolute;
+		    top: 3px;
+		    right: 6px;
+		    font-size: 1rem;
+		}
+		.tooltip-position {
+			display: none;
+		    position: absolute;
+		    left: -250px;
+		    top: 50%;
+		    transform: translateY(-50%);
+		    z-index: 10;
+		}
+		.tooltip-position:before {
+		    content: ' ';
+		    display: block;
+		    position: absolute;
+		    right: -7px;
+		    top: 50%;
+		    width: 14px;
+		    height: 14px;
+		    margin-top: -7px;
+		    border-color: rgba(51,51,51,0.25);
+		    border-width: 1px;
+		    border-style: solid solid none none;
+		    background-color: #FFFFFF;
+		    transform: rotate(45deg);
+		    -webkit-transform: rotate(45deg);
+		    -moz-transform: rotate(45deg);
+		    z-index: 11;
+		}
+		.tooltip-content {
+		    border: 1px solid rgba(51,51,51,0.25);
+		    background: #FFFFFF;
+		    width: 200px;
+		    padding: 0px 12px;
+		    border-radius: 2px;
+		    box-shadow: 2px 2px 2px 0px rgba(51,51,51,0.15);
+		    position: relative;
+		}
+		.tooltip-content p, .tooltip-content h4 {
+			margin: 10px 0;
+			line-height: 1.5;
+		}
+		.download-pdf {
+		    display: flex;
+		    align-items: center;
+		    margin-bottom: 5px;
+		}
+		.download-pdf svg {
+			width: 1rem !important;
+    		margin-right: 8px;
+		}
+		@media all and (max-width: 768px) {
+			.tooltip-position {
+			    left: 50%;
+			}
+			.tooltip-position:before {
+			    left: -8px;
+			    border-style: none none solid solid;
+			}
+			.tooltip-content {
+				width: 160px;
+			}
+
+		}
+		/* floormap style end */
+    </style>
+</head>
+
+
+
+
+<body>
+	<div id="floormap">
+        <div class="hover-container">
+	        <div class="floors floor-19" data-key="0">
+	        	<div class="floors-BG" data-key="0"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 19</h4>
+		               	<p>Terrace: 4,600 sq. ft.</p>
+		               	<a class="download-pdf" data-fancybox href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/Floor19.jpg" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2017/05/North-500px.jpg" data-fancybox="gallery_floor19" target="_blank"><i class="fas fa-camera"></i> Views</a>
+		               	<a href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/17East-800px.jpg" data-fancybox="gallery_floor19" target="_blank"></a>
+		               	<a href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/19-West-800px.jpg" data-fancybox="gallery_floor19" target="_blank"></a>
+		               	<a href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/19-South-800px.jpg" data-fancybox="gallery_floor19" target="_blank"></a>
+		               	<div class="tooltip-close" data-key="0"><i class="fas fa-window-close"></i></div>
+	            	</div>
+	        	</div> 
+	        </div>
+
+	        <div class="floors floor-18" data-key="1">
+	        	<div class="floors-BG no-terrace" data-key="1"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+	        			<h4>Floor 18</h4>
+		               	<p>15,749 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/Floor18-1.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="1"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-17" data-key="2">
+	        	<div class="floors-BG" data-key="2"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 17</h4>
+		               	<p>15,705 sq. ft. | Terrace: 3,843 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor17.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="2"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-16" data-key="3">
+	        	<div class="floors-BG" data-key="3"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 16</h4>
+		               	<p>19,830 sq. ft. | Terrace: 2,713 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor16.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="3"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-15" data-key="4">
+	        	<div class="floors-BG" data-key="4"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 15</h4>
+		               	<p>22,736 sq. ft. | Terrace: 1,076 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor15.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="4"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-14" data-key="5">
+	        	<div class="floors-BG" data-key="5"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 14</h4>
+		               	<p>23,690 sq. ft. | Terrace: 969 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor14.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="5"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-13" data-key="6">
+	        	<div class="floors-BG no-terrace" data-key="6"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 13</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor13.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="6"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-12" data-key="7">
+	        	<div class="floors-BG no-terrace" data-key="7"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 12</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor12.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="7"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-11" data-key="8">
+	        	<div class="floors-BG no-terrace" data-key="8"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 11</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor11.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="8"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-10" data-key="9">
+	        	<div class="floors-BG no-terrace" data-key="9"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 10</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor10.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="9"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-9" data-key="10">
+	        	<div class="floors-BG no-terrace" data-key="10"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 9</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor9.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="10"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-8" data-key="11">
+	        	<div class="floors-BG no-terrace" data-key="11"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 8</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor8.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="11"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-7" data-key="12">
+	        	<div class="floors-BG no-terrace" data-key="12"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 7</h4>
+		               	<p>24,510 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor7.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="12"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-6" data-key="13">
+	        	<div class="floors-BG" data-key="13"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 6</h4>
+		               	<p>24,510 sq. ft. | Terrace: 2,379 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor6.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="13"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-5" data-key="14">
+	        	<div class="floors-BG" data-key="14"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 5</h4>
+		               	<p>25,826 sq. ft. | Terrace: 678 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor5.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="14"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-4" data-key="15">
+	        	<div class="floors-BG" data-key="15"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 4</h4>
+		               	<p>26,812 sq. ft. | Terrace: 1,894 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor4.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="15"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-3" data-key="16">
+	        	<div class="floors-BG no-terrace" data-key="16"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 3</h4>
+		               	<p>29,131 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor3.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="16"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-2" data-key="17">
+	        	<div class="floors-BG no-terrace" data-key="17"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Floor 2</h4>
+		               	<p>20,303 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/floor2.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="17"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+	        <div class="floors floor-1" data-key="18">
+	        	<div class="floors-BG no-terrace" data-key="18"></div>
+	        	<div class="tooltip-position">
+	        		<div class="tooltip-content">
+		        		<h4>Lobby</h4>
+		               	<p>Office: 15,749 sq. ft.<br>
+		               	Terrace: 3,843 sq. ft.</p>
+		               	<a class="download-pdf" href="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/03/groundfloor.png" target="_blank"><i class="fas fa-file-pdf"></i> Floorplan</a>
+			            <div class="tooltip-close" data-key="18"><i class="fas fa-window-close"></i></div>
+		            </div>
+		        </div> 
+	        </div>
+
+
+		</div>  
+		<img src="http://dev.cbrecanada.com/65kingeast/wp-content/uploads/2018/05/65_King_architecture_updatedv2.svg">
+	</div>
+	<script type="text/javascript">    
+	      const openToolTip = document.getElementsByClassName('floors-BG')
+	      const closeToolTip = document.getElementsByClassName('tooltip-close')
+	      const actingToolTip = document.getElementsByClassName('floors')
+	      let currentOpen;
+
+	      Array.from(openToolTip).forEach(e => {
+	        e.addEventListener('click', function(){
+	          if (currentOpen > -1) {
+	            actingToolTip[currentOpen].classList.remove('active')
+	            }
+	          const index = parseInt(this.dataset.key);
+	          actingToolTip[index].classList.add('active')
+	          currentOpen = index;
+	        })
+	      })
+	      
+	      Array.from(closeToolTip).forEach(e => {
+	        e.addEventListener('click', function(){
+	          const index = parseInt(this.dataset.key);
+	          actingToolTip[index].classList.remove('active');
+	        })
+	      })
+	</script>
+</body></html>
